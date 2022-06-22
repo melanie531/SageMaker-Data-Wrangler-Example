@@ -7,7 +7,6 @@ With the rapid growth of the commercial music streaming services, more and more 
 
 Amazon SageMaker helps data scientists and developers to prepare, build, train, and deploy machine learning models quickly by bringing together a broad set of purpose-built capabilities. This example shows how SageMaker can accelerate machine learning development during the data preprocessing stage to help build the musical playlist tailored to a user's tastes.
 
-## Overview
 ### Dataset
 
 <div class="alert alert-block alert-info">
@@ -66,13 +65,12 @@ For this experiment the Data Source will be [Amazon S3](https://aws.amazon.com/s
 </div>
 
 ## Experiment steps
+
 ### Downloading the dataset, and notebooks
 
-* Ensure that you have a working Amazon SageMaker Studio environment and that it has been updated.
-* Open an Amazon SageMaker Studio terminal to import the datasets and notebook into Amazon SageMaker Studio
-    * Select **File / New / Terminal** from the menu at the top of Amazon SageMaker Studio.
-    ![image](./img/dl-image-1.png)
-* Next, download the dataset to SageMaker Studio notebook using the commands below.
+* Ensure that you have a working [Amazon SageMaker Studio](https://aws.amazon.com/sagemaker/studio/) environment and that it has been updated.
+
+* Follow the steps below to download the dataset.
     * Start with the `explore-dataset.ipynb` SageMaker Studio notebook.
         * Explore the dataset locally by running the cells in the notebook.
         * Upload the datasets (CSV files) to an S3 location for consumption by SageMaker Data Wrangler later.
@@ -93,6 +91,14 @@ For this experiment the Data Source will be [Amazon S3](https://aws.amazon.com/s
 
 * The data structure is defined in the next section. However, before we continue, note the path to the various datasets. Your paths will be different to the ones in the image below. Please copy these paths as you will use them later. An example of a path is s3://sagemaker-eu-west-1-112233445566/music-recommendation-demo/input/tracks.csv
 ![image](./img/dl-image-7.png)
+
+<div class="alert alert-block alert-info">
+   <b>Note</b>
+
+   Please also check the S3 location to make sure the files are uploaded successfully before moving to the next section.
+
+</div>
+    
 
 In the next section we will import the datasets into Data Wrangler via the SageMaker Studio User Interface (UI).
 
@@ -152,7 +158,8 @@ In the next section we will import the datasets into Data Wrangler via the SageM
     ![image](./img/image-17.png)
 
 ### Joining datasets - first join
-* Given, we have imported both the tracks and ratings CSV files in the beginning steps. Let us walk through on how to join these CSV files based on a common unique identifier column, *trackId*. 
+* Given, we have imported both the tracks and ratings CSV files in the beginning steps. Let us walk through on how to join these CSV files based on a common unique identifier column, *trackId*. Then we will perform some feature engineering to generate a new set of features that can help to enrich the trainig data.
+
 * Click on either the tracks or ratings transform block as shown in the image blow:
     * Here, we have selected tracks transform flow block and hit **Join**
     ![image](./img/image-18.png)
@@ -160,20 +167,20 @@ In the next section we will import the datasets into Data Wrangler via the SageM
     <div class="alert alert-block alert-info">
     <b>Note</b>
 
-    Files can also be concatenated similar to join operations
+        Files can also be concatenated similar to join operations
 
     </div>
     
     * Hit configure.
     ![image](./img/image-19.png)
-    * Here, choose a name for the resulting join file and choose the type of join and columns on to join.
+    * Here, choose a name for the resulting join file and choose the type of join and columns on to join (Please refer to the image below).
     ![image](./img/image-20.png)
     * Hit **Apply** (*Preview*) . You can see a preview of the Joined dataset as shown in the image below.
     ![image](./img/image-21.png)
     <div class="alert alert-block alert-info">
     <b>Note</b>
 
-    Depending on the version of SageMaker it might be Preview and not Add
+        Depending on the version of SageMaker it might be Preview and not Add
 
     </div>
     
@@ -181,7 +188,7 @@ In the next section we will import the datasets into Data Wrangler via the SageM
     * At the end of this step, the data flow looks as shown below.
     ![image](./img/image-22.png)
     
-    * Next step, let's see how to use Data Wrangler to add custom transform to perform more advanced feature engineering. Here, we want to use pyspark to calculate averages of 5-star ratings and use them as new features.
+    * Next step, let's see how to use Data Wrangler to add custom transform to perform more advanced feature engineering. Here, we want to use pyspark to calculate the average values of 5-star ratings for different columns and use them as new features.
     * Select on the jointrackid.csv block and click the + icon, under which click on Add transform.
     ![image](./img/image-23.png)
     * Click the custom transform at this step.
@@ -274,11 +281,13 @@ df = df.filter(F.col('Rating')==5).groupBy('userId').agg(*agg_obj)
 
 ![image](./img/image-44.png)
 
-* Follow the link to see the status of your job.
+* Follow the link to see the status of your job. This processing job takes around 5-10 mins.
 
 ![image](./img/image-45.png)
 
-* When the job is complete a new file will be available in your S3 bucket in the output folder.
+* When the job is complete the train and test output files will be available in the corresponding S3 output folders. You can find the output location from the processing job configurations.
+
+![image](./img/image-processing-job-output.png)
 
 ### *Other ways to export the transformations and analysis*
 
@@ -293,6 +302,8 @@ df = df.filter(F.col('Rating')==5).groupBy('userId').agg(*agg_obj)
     * Export as a SageMaker Pipeline notebook.
     * Export as a Python script.
     * Export to SageMaker Feature Store as a notebook.
+
+So far, we have demonstrated how to use Amazon SageMaker Data Wrangler to preprocess the data and perform feature engineering to prepare for the train and test data set. After the data preparation step, data scientists can work on training a machine learning model using these datasets. In the next section, we will show you how to directly start a training job with the train data by leveraging Amazon SageMaker Autopilot from the SageMaker Data Wrangler data flow.
 
 ### *Run Autopilot training directly from Data Wrangler flow* (**Optional**)
 * SageMaker Data Wragler now allow you to directly run an [Autopilot](https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html) job to automatically train a model. 
