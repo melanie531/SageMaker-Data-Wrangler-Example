@@ -4,7 +4,7 @@ With the rapid growth of the commercial music streaming services, more and more 
 
 
 ## Overview
-Amazon SageMaker helps data scientists and developers to prepare, build, train, and deploy machine learning models quickly by bringing together a broad set of purpose-built capabilities. In this workshop, learn about how SageMaker can accelerate machine learning development by way of an example where we build the musical playlist tailored to a user's tastes.
+Amazon SageMaker helps data scientists and developers to prepare, build, train, and deploy machine learning models quickly by bringing together a broad set of purpose-built capabilities. This example shows how SageMaker can accelerate machine learning development during the data preprocessing stage to help build the musical playlist tailored to a user's tastes.
 
 ## Dataset
 
@@ -44,7 +44,7 @@ We'll be running a notebook to download the data in the demo so no need to manua
 |`sessionId`| unique id for the user's session |
 |`Rating`| user's rating of song on scale from 1 to 5 |
 
-For this workshop, we'll be using our own generated track and user ratings data, but publicly available datasets/apis such as the [Million Song Dataset](http://millionsongdataset.com/) and open-source song ratings APIs are available for personal research purposes. A full end-to-end pipeline can be found in this [SageMaker example](https://github.com/aws/amazon-sagemaker-examples/tree/main/end_to_end/music_recommendation).
+For this example, we'll be using our own generated track and user ratings data, but publicly available datasets/apis such as the [Million Song Dataset](http://millionsongdataset.com/) and open-source song ratings APIs are available for personal research purposes. A full end-to-end pipeline can be found in this [SageMaker example](https://github.com/aws/amazon-sagemaker-examples/tree/main/end_to_end/music_recommendation).
 
 ## Experiment:
 
@@ -72,20 +72,17 @@ For this experiment the Data Source will be [Amazon S3](https://aws.amazon.com/s
 
 ### Downloading the dataset, and notebooks
 
-* Ensure that you have a working Amazon SageMaker Studio environment and that it has been updated. If you do not, follow the instructions [here](https://catalog.us-east-1.prod.workshops.aws/workshops/f560a788-af64-4e5a-a02c-a6c88516ab02/en-US/introduction/setup-sagemaker).
+* Ensure that you have a working Amazon SageMaker Studio environment and that it has been updated.
 * Open an Amazon SageMaker Studio terminal to import the datasets and notebook into Amazon SageMaker Studio
     * Select **File / New / Terminal** from the menu at the top of Amazon SageMaker Studio.
     ![image](./img/dl-image-1.png)
 * Next, download the dataset to SageMaker Studio notebook using the commands below.
-    * Start with the downloaded [explore-dataset.ipynb](https://github.com/melanie531/LCNC-media-workshop-temp/blob/main/explore_data.ipynb) SageMaker Studio notebook.
+    * Start with the `explore-dataset.ipynb` SageMaker Studio notebook.
         * Explore the dataset locally by running the cells in the notebook.
         * Upload the datasets (CSV files) to an S3 location for consumption by SageMaker Data Wrangler later.
         * Copy the S3 URLs of the tracks and ratings data files to your clipboard. We will use these URLs later to import these part files into Data Wrangler and join them.
     * Let's run though each of the steps above.
-* From the terminal run the following commands:
-* **TODO** fill the commands to download the workshop contents
 
-* Notice the file explorer on the right has been updated with a new folder called lcnc. Double click on the folder and double click on the folder music.
 * Double click on the file called explore-data.ipynb. Amazon SageMaker may prompt you to select a kernel and image. If it does select Data Science as the image and Python 3 as the Kernel, as shown here:
 ![image](./img/dl-image-3.png)
 
@@ -98,7 +95,7 @@ For this experiment the Data Source will be [Amazon S3](https://aws.amazon.com/s
 * Examine the results, as you can see the samples of the data are printed to the screen.
 ![image](./img/dl-image-6.png)
 
-* The data structure is defined in the next section. However, before we continue, note the path to the various datasets. Your paths will be different to the ones in the image below. Please copy these paths as you will use them later. An example of a path is s3://sagemaker-eu-west-1-112233445566/music-recommendation-workshop/input/tracks.csv
+* The data structure is defined in the next section. However, before we continue, note the path to the various datasets. Your paths will be different to the ones in the image below. Please copy these paths as you will use them later. An example of a path is s3://sagemaker-eu-west-1-112233445566/music-recommendation-demo/input/tracks.csv
 ![image](./img/dl-image-7.png)
 
 In the next section we will import the datasets into Data Wrangler via the SageMaker Studio User Interface (UI).
@@ -116,7 +113,7 @@ In the next section we will import the datasets into Data Wrangler via the SageM
 ![image](./img/image-2.png)
 * Once Data Wrangler is loaded, you should be able to see it under running instances and apps as shown below.
 ![image](./img/image-3.png)
-* Next, make sure you have copied the data paths from the previous section, as you will need them in this section.
+* Next, make sure you have copied the data paths when running the `explore_data.ipynb` notebook from the previous section (see section: **Downloading the dataset, and notebooks**), as you will need them in this section.
 * Once Data Wrangler is up and running, you can see the following data flow interface with options for import, creating data flows and export as shown below.
 ![image](./img/image-4.png)
 * Make sure to rename the untitled.flow to your preference (for e.g., join.flow)
