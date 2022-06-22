@@ -3,10 +3,12 @@
 With the rapid growth of the commercial music streaming services, more and more people nowadayas are listening to music from they model devices. However, organising, managing and searching among all the digital music produced by the society is a very time-cosuming and tedious task. Using a music recommender system to predict the user's choices and suggest songs that is likely to be interesting has been a common practice used by the music providers.
 
 
-## Overview
+## Background
+
 Amazon SageMaker helps data scientists and developers to prepare, build, train, and deploy machine learning models quickly by bringing together a broad set of purpose-built capabilities. This example shows how SageMaker can accelerate machine learning development during the data preprocessing stage to help build the musical playlist tailored to a user's tastes.
 
-## Dataset
+## Overview
+### Dataset
 
 <div class="alert alert-block alert-info">
 <b>Dataset</b>
@@ -46,15 +48,9 @@ We'll be running a notebook to download the data in the demo so no need to manua
 
 For this example, we'll be using our own generated track and user ratings data, but publicly available datasets/apis such as the [Million Song Dataset](http://millionsongdataset.com/) and open-source song ratings APIs are available for personal research purposes. A full end-to-end pipeline can be found in this [SageMaker example](https://github.com/aws/amazon-sagemaker-examples/tree/main/end_to_end/music_recommendation).
 
-## Experiment:
-
-`SageMaker DataWrangler` for exploratory data analysis (EDA) of feature columns and joining different data sources.
-
-`SageMaker Autopilot` to train and tune an optimal regression model.
-
 ## Pre-requisites:
 
-  * We need to ensure dataset (loan default prediction) for ML is uploaded to a data source. 
+  * We need to ensure dataset (tracks and ratings dataset) for ML is uploaded to a data source (instructions to download the dataset to Amazon S3 is available in the following section). 
   * Data source can be any one of the following options:
        * S3
        * Athena
@@ -69,7 +65,7 @@ For this experiment the Data Source will be [Amazon S3](https://aws.amazon.com/s
 
 </div>
 
-
+## Experiment steps
 ### Downloading the dataset, and notebooks
 
 * Ensure that you have a working Amazon SageMaker Studio environment and that it has been updated.
